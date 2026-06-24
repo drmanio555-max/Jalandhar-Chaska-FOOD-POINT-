@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jalandhar Chaska & FOOD POINT</title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8fafc;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Hero Section */
+        .hero-food {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.5) 100%),
+                url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+        }
+
+        /* Brand Name Animation */
+        .brand-name {
+            background: linear-gradient(45deg, #f59e0b, #ef4444, #f59e0b);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 4s ease infinite;
+        }
+        @keyframes gradientMove {
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        /* Category Cards */
+        .category-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            background: white;
+        }
+        .category-card:hover {
+            transform: translateY(-6px) scale(1.03);
+            border-color: #f59e0b;
+            box-shadow: 0 12px 30px rgba(245, 158, 11, 0.25);
+        }
+        .category-card.active {
+            border-color: #f59e0b;
+            background: #fef3c7;
+        }
+        .category-card .icon-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 10px;
+            background: #fef3c7;
+            color: #f59e0b;
+            transition: all 0.3s;
+        }
+        .category-card:hover .icon-circle {
+            background: #f59e0b;
+            color: white;
+            transform: scale(1.1) rotate(-10deg);
+        }
+
+        /* Food Cards */
+        .food-card {
+            transition: all 0.35s ease;
+            border: 1px solid #e2e8f0;
+            background: white;
+        }
+        .food-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.25);
+            border-color: #f59e0b;
+        }
+        .food-card .price-tag {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Badges */
+        .badge-popular {
+            background: #ef4444;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        .badge-new {
+            background: #22c55e;
+            color: white;
+        }
+        .badge-offer {
+            background: #8b5cf6;
+            color: white;
+        }
+        .badge-special {
+            background: #f59e0b;
+            color: black;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Cart Sidebar */
+        #cart-sidebar {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Rating Stars */
+        .stars {
+            color: #fbbf24;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        /* Floating WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: #25d366;
+            color: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            box-shadow: 0 6px 24px rgba(37, 211, 102, 0.45);
+            z-index: 40;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.6);
+        }
+
+        /* Cart Items Scroll */
+        #cart-items::-webkit-scrollbar {
+            width: 4px;
+        }
+        #cart-items::-webkit-scrollbar-thumb {
+            background: #f59e0b;
+            border-radius: 10px;
+        }
+
+        /* Filter Buttons */
+        .filter-btn {
+            transition: all 0.25s;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            background: #f1f5f9;
+            color: #334155;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        .filter-btn:hover {
+            background: #e2e8f0;
+        }
+        .filter-btn.active {
+            background: #1a1a1a;
+            color: #fbbf24;
+            border-color: #fbbf24;
+        }
+
+        /* Delivery Time Badge */
+        .delivery-time {
+            background: #dbeafe;
+            color: #1e40af;
+            font-size: 0.65rem;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        /* No Results */
+        .no-result {
+            display: none;
+        }
+
+        /* Contact Info Box */
+        .contact-box {
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            border: 2px solid #f59e0b;
+        }
+        .contact-box .phone-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #f59e0b;
+            letter-spacing: 2px;
+        }
+
+        /* Free Delivery Banner */
+        .free-delivery {
+            background: linear-gradient(90deg, #f59e0b, #ef4444, #f59e0b);
+            background-size: 200% 200%;
+            animation: gradientMove 3s ease infinite;
+            color: white;
+            font-weight: 800;
+            padding: 12px;
+            text-align: center;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 640px) {
+            .whatsapp-float {
+                width: 52px;
+                height: 52px;
+                font-size: 28px;
+                bottom: 16px;
+                right: 16px;
+            }
+            .contact-box .phone-number {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== FREE DELIVERY BANNER ========== -->
+    <div class="free-delivery">
+        <i class="fas fa-truck mr-2"></i> HOME DELIVERY FREE — گھر ڈیلیوری مفت
+    </div>
+
+    <!-- ========== HEADER ========== -->
+    <header class="bg-black text-white sticky top-0 z-50 shadow-2xl">
+        <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <a href="#" class="text-xl sm:text-2xl md:text-3xl font-extrabold tracking-wider">
+                <span class="brand-name">JALANDHAR</span>
+                <span class="text-yellow-400">CHASKA</span>
+                <span class="text-white">&</span>
+                <span class="text-yellow-400">FOOD POINT</span>
+            </a>
+
+            <!-- Search Bar -->
+            <div class="flex-1 max-w-md mx-2 relative">
+                <input id="search-input" type="text" placeholder="🔍 کھانا تلاش کریں / Search food..."
+                       class="w-full px-5 py-2.5 rounded-full text-black bg-gray-100 focus:outline-none focus:ring-2 focus:ring-yellow-400 text-sm">
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="relative cursor-pointer" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart text-2xl hover:text-yellow-400 transition"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-3 bg-red-500 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories Navigation -->
+        <div class="border-t border-gray-800 py-2.5 bg-black/90">
+            <div class="container mx-auto px-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+                <button class="filter-btn active" data-filter="all">🍽️ سب / All</button>
+                <button class="filter-btn" data-filter="dahi">🥛 دہی بھلے / Dahi Bhallay</button>
+                <button class="filter-btn" data-filter="fruit">🍎 فروٹ چاٹ / Fruit Chat</button>
+                <button class="filter-btn" data-filter="burger">🍔 برگر / Burger</button>
+                <button class="filter-btn" data-filter="zinger">🍗 زنگر برگر / Zinger</button>
+                <button class="filter-btn" data-filter="shawarma">🌯 شوارما / Shawarma</button>
+                <button class="filter-btn" data-filter="chips">🍟 چپس / Chips</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero-food h-[50vh] sm:h-[55vh] flex items-center justify-center text-center px-4">
+        <div class="max-w-3xl">
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3 text-white drop-shadow-2xl">
+                <span class="brand-name">JALANDHAR</span>
+                <span class="text-yellow-400">CHASKA</span>
+                <span class="text-white">&</span>
+                <span class="text-yellow-400">FOOD POINT</span>
+            </h1>
+            <p class="text-base sm:text-lg text-gray-200 mb-4 font-light">
+                🥛 دہی بھلے • 🍎 فروٹ چاٹ • 🍔 برگر • 🍗 زنگر برگر • 🌯 شوارما • 🍟 چپس
+            </p>
+            <p class="text-sm text-gray-300 mb-6 max-w-2xl mx-auto">
+                ہمارے پاس مزیدار اور منفرد ذائقے ہیں۔ اس سے بہتر کوالٹی کی ضمانت دیتے ہیں۔
+                <br />Delicious and unique flavors. Quality guaranteed.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="#menu" class="bg-yellow-400 text-black px-8 py-3.5 rounded-full font-bold hover:bg-yellow-500 transition shadow-xl inline-block">
+                    <i class="fas fa-utensils mr-2"></i> آرڈر کریں / Order Now
+                </a>
+                <a href="#contact" class="bg-white/10 backdrop-blur-sm text-white px-8 py-3.5 rounded-full font-bold hover:bg-white/20 transition border border-white/30 inline-block">
+                    <i class="fas fa-phone mr-2"></i> رابطہ کریں / Contact
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== QUICK CATEGORIES ========== -->
+    <section class="container mx-auto px-4 -mt-8 relative z-10">
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
+            <div class="category-card active p-3 rounded-xl text-center" data-cat="all" onclick="filterCategory('all')">
+                <div class="icon-circle">🍽️</div>
+                <span class="text-xs font-bold">سب / All</span>
+            </div>
+            <div class="category-card p-3 rounded-xl text-center" data-cat="dahi" onclick="filterCategory('dahi')">
+                <div class="icon-circle">🥛</div>
+                <span class="text-xs font-bold">دہی بھلے / Dahi</span>
+            </div>
+            <div class="category-card p-3 rounded-xl text-center" data-cat="fruit" onclick="filterCategory('fruit')">
+                <div class="icon-circle">🍎</div>
+                <span class="text-xs font-bold">فروٹ چاٹ / Fruit</span>
+            </div>
+            <div class="category-card p-3 rounded-xl text-center" data-cat="burger" onclick="filterCategory('burger')">
+                <div class="icon-circle">🍔</div>
+                <span class="text-xs font-bold">برگر / Burger</span>
+            </div>
+            <div class="category-card p-3 rounded-xl text-center" data-cat="zinger" onclick="filterCategory('zinger')">
+                <div class="icon-circle">🍗</div>
+                <span class="text-xs font-bold">زنگر / Zinger</span>
+            </div>
+            <div class="category-card p-3 rounded-xl text-center" data-cat="shawarma" onclick="filterCategory('shawarma')">
+                <div class="icon-circle">🌯</div>
+                <span class="text-xs font-bold">شوارما / Shawarma</span>
+            </div>
+            <div class="category-card p-3 rounded-xl text-center" data-cat="chips" onclick="filterCategory('chips')">
+                <div class="icon-circle">🍟</div>
+                <span class="text-xs font-bold">چپس / Chips</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== STATS ========== -->
+    <section class="bg-black text-white py-8 mt-8 border-t border-yellow-400/20">
+        <div class="container mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div>
+                <div class="text-3xl font-bold text-yellow-400">1000+</div>
+                <div class="text-sm text-gray-400">خوش گاہک / Happy Customers</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold text-yellow-400">30+</div>
+                <div class="text-sm text-gray-400">ڈشز / Dishes</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold text-yellow-400">30 min</div>
+                <div class="text-sm text-gray-400">اوسط ڈیلیوری / Avg Delivery</div>
+            </div>
+            <div>
+                <div class="text-3xl font-bold text-yellow-400">4.9 ★</div>
+                <div class="text-sm text-gray-400">صارفین کی ریٹنگ / Rating</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== MENU SECTION ========== -->
+    <section id="menu" class="container mx-auto px-4 py-12">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl sm:text-4xl font-extrabold inline-block border-b-4 border-yellow-400 pb-3">
+                🍽️ ہمارا مینو / Our Menu
+            </h2>
+            <p class="text-gray-500 mt-3">مزیدار اور منفرد ذائقے / Delicious & Unique Flavors</p>
+        </div>
+
+        <div id="food-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Food items will be injected here -->
+        </div>
+
+        <div id="no-results" class="text-center py-12 text-gray-500 text-lg hidden">
+            <i class="fas fa-search text-5xl block mb-4 text-gray-300"></i>
+            کوئی ڈش نہیں ملی / No dishes found 😔
+        </div>
+    </section>
+
+    <!-- ========== SPECIAL OFFER BANNER ========== -->
+    <section class="bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 py-8">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-black">
+                🎉 اسپیشل آفر! پہلے آرڈر پر 20% ڈسکاؤنٹ
+            </h3>
+            <p class="text-black/80 text-sm mt-1">پہلا آرڈر کرنے پر 20% چھوٹ / 20% off on first order</p>
+        </div>
+    </section>
+
+    <!-- ========== CONTACT SECTION ========== -->
+    <section id="contact" class="container mx-auto px-4 py-12">
+        <div class="contact-box rounded-2xl p-8 max-w-2xl mx-auto text-center">
+            <h3 class="text-2xl font-bold text-white mb-2">
+                <i class="fas fa-phone text-yellow-400 mr-2"></i> رابطہ کریں / Contact Us
+            </h3>
+            <p class="text-gray-400 text-sm mb-4">آرڈرز کے لیے ہمیں کال یا واٹس ایپ کریں</p>
+            <div class="phone-number">
+                <i class="fab fa-whatsapp mr-3"></i> 03221158760
+            </div>
+            <div class="flex justify-center gap-4 mt-4">
+                <a href="tel:03221158760" class="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition font-bold text-sm">
+                    <i class="fas fa-phone mr-2"></i> Call Now
+                </a>
+                <a href="https://wa.me/923221158760" target="_blank" class="bg-yellow-400 text-black px-6 py-2 rounded-full hover:bg-yellow-500 transition font-bold text-sm">
+                    <i class="fab fa-whatsapp mr-2"></i> WhatsApp
+                </a>
+            </div>
+            <div class="mt-4 text-yellow-400 font-bold text-sm">
+                <i class="fas fa-truck mr-2"></i> HOME DELIVERY FREE — گھر ڈیلیوری مفت
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CART SIDEBAR ========== -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white shadow-2xl z-50 transform translate-x-full p-6 flex flex-col justify-between">
+        <div>
+            <div class="flex justify-between items-center border-b pb-4 mb-4">
+                <h2 class="text-2xl font-extrabold">
+                    <i class="fas fa-shopping-bag text-yellow-500"></i> کارٹ / Cart
+                </h2>
+                <button onclick="toggleCart()" class="text-3xl font-light hover:text-red-500 transition">&times;</button>
+            </div>
+            <div id="cart-items" class="space-y-3 overflow-y-auto max-h-[55vh] pr-1"></div>
+            <div id="empty-cart-msg" class="text-center text-gray-400 py-10">
+                <i class="fas fa-box-open text-4xl block mb-3"></i>
+                کارٹ خالی ہے / Cart is empty
+            </div>
+        </div>
+        <div class="border-t pt-4">
+            <div class="flex justify-between font-bold text-xl mb-4">
+                <span>کل / Total:</span>
+                <span id="cart-total" class="text-yellow-600">Rs. 0</span>
+            </div>
+            <button onclick="checkout()" class="w-full bg-yellow-400 text-black py-3.5 rounded-xl font-bold hover:bg-yellow-500 transition flex items-center justify-center gap-2 text-lg">
+                <i class="fab fa-whatsapp"></i> آرڈر بھیجیں / Order via WhatsApp
+            </button>
+            <p class="text-[10px] text-gray-400 text-center mt-2">آرڈر واٹس ایپ پر بھیجا جائے گا</p>
+        </div>
+    </div>
+
+    <!-- ========== WHATSAPP FLOAT ========== -->
+    <a href="https://wa.me/923221158760?text=السلام%20علیکم%20Jalandhar%20Chaska%20FOOD%20POINT!%20مجھے%20آرڈر%20کرنا%20ہے" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-black text-gray-400 py-8 text-center border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <p class="text-xl sm:text-2xl font-extrabold">
+                <span class="brand-name">JALANDHAR</span>
+                <span class="text-yellow-400">CHASKA</span>
+                <span class="text-white">&</span>
+                <span class="text-yellow-400">FOOD POINT</span>
+            </p>
+            <p class="text-sm mt-2">🥛 دہی بھلے • 🍎 فروٹ چاٹ • 🍔 برگر • 🍗 زنگر برگر • 🌯 شوارما • 🍟 چپس</p>
+            <p class="text-xs mt-3 text-gray-600">ہمارے پاس مزیدار اور منفرد ذائقے ہیں۔ کوالٹی کی ضمانت</p>
+            <p class="text-xs mt-1 text-yellow-400 font-bold">📞 03221158760</p>
+            <p class="text-xs mt-1 text-green-400"><i class="fas fa-truck mr-1"></i> HOME DELIVERY FREE</p>
+            <p class="text-xs mt-4 text-gray-600">&copy; 2026 Jalandhar Chaska & FOOD POINT — تمام حقوق محفوظ ہیں</p>
+            <div class="flex justify-center gap-6 mt-4 text-xl">
+                <a href="#" class="hover:text-yellow-400 transition"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="hover:text-yellow-400 transition"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="hover:text-yellow-400 transition"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="hover:text-yellow-400 transition"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- ======================== JAVASCRIPT ========================== -->
+    <!-- ============================================================ -->
+    <script>
+        // ================================================================
+        //  🍕 FOOD DATA — Jalandhar Chaska & FOOD POINT
+        // ================================================================
+        const foodItems = [{
+            id: 1,
+            name: "دہی بھلے / Dahi Bhallay",
+            price: 250,
+            description: "مزیدار دہی بھلے / Delicious Dahi Bhallay",
+            image: "https://images.unsplash.com/photo-1589301760014-d929f3979c05?auto=format&fit=crop&w=500&q=80",
+            category: "dahi",
+            rating: 4.8,
+            deliveryTime: "10-15 min",
+            badge: "Popular 🔥",
+            inStock: true
+        }, {
+            id: 2,
+            name: "فروٹ چاٹ / Fruit Chat",
+            price: 300,
+            description: "مختلف پھلوں کا مزیدار چاٹ / Delicious Fruit Chat",
+            image: "https://images.unsplash.com/photo-1589301760014-d929f3979c05?auto=format&fit=crop&w=500&q=80",
+            category: "fruit",
+            rating: 4.7,
+            deliveryTime: "5-10 min",
+            badge: "New 🎉",
+            inStock: true
+        }, {
+            id: 3,
+            name: "برگر / Burger",
+            price: 450,
+            description: "مزیدار چکن برگر / Delicious Chicken Burger",
+            image: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=500&q=80",
+            category: "burger",
+            rating: 4.6,
+            deliveryTime: "15-20 min",
+            badge: "",
+            inStock: true
+        }, {
+            id: 4,
+            name: "چیز برگر / Cheese Burger",
+            price: 500,
+            description: "چیز سے بھرپور برگر / Cheese Loaded Burger",
+            image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80",
+            category: "burger",
+            rating: 4.8,
+            deliveryTime: "15-20 min",
+            badge: "Popular 🔥",
+            inStock: true
+        }, {
+            id: 5,
+            name: "زنگر برگر / Zinger Burger",
+            price: 550,
+            description: "کرنچی زنگر برگر / Crunchy Zinger Burger",
+            image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80",
+            category: "zinger",
+            rating: 4.9,
+            deliveryTime: "20-25 min",
+            badge: "Popular 🔥",
+            inStock: true
+        }, {
+            id: 6,
+            name: "زنگر برگر (اسپائسی) / Spicy Zinger",
+            price: 580,
+            description: "مسالیدار زنگر برگر / Spicy Zinger Burger",
+            image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80",
+            category: "zinger",
+            rating: 4.8,
+            deliveryTime: "20-25 min",
+            badge: "New 🎉",
+            inStock: true
+        }, {
+            id: 7,
+            name: "شوارما / Shawarma",
+            price: 550,
+            description: "چکن شوارما / Chicken Shawarma",
+            image: "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=500&q=80",
+            category: "shawarma",
+            rating: 4.7,
+            deliveryTime: "15-20 min",
+            badge: "",
+            inStock: true
+        }, {
+            id: 8,
+            name: "چیز شوارما / Cheese Shawarma",
+            price: 600,
+            description: "چیز سے بھرپور شوارما / Cheese Loaded Shawarma",
+            image: "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=500&q=80",
+            category: "shawarma",
+            rating: 4.9,
+            deliveryTime: "15-20 min",
+            badge: "Offer 🎊",
+            inStock: true
+        }, {
+            id: 9,
+            name: "چپس / Chips",
+            price: 150,
+            description: "کرنچی فرنچ فرائز / Crunchy French Fries",
+            image: "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=500&q=80",
+            category: "chips",
+            rating: 4.5,
+            deliveryTime: "5-10 min",
+            badge: "",
+            inStock: true
+        }, {
+            id: 10,
+            name: "چیز چپس / Cheese Chips",
+            price: 200,
+            description: "چیز سے بھرپور فرائز / Cheese Loaded Fries",
+            image: "https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?auto=format&fit=crop&w=500&q=80",
+            category: "chips",
+            rating: 4.7,
+            deliveryTime: "5-10 min",
+            badge: "New 🎉",
+            inStock: true
+        }, {
+            id: 11,
+            name: "دہی بھلے (اسپیشل) / Special Dahi",
+            price: 300,
+            description: "اسپیشل دہی بھلے / Special Dahi Bhallay",
+            image: "https://images.unsplash.com/photo-1589301760014-d929f3979c05?auto=format&fit=crop&w=500&q=80",
+            category: "dahi",
+            rating: 4.9,
+            deliveryTime: "10-15 min",
+            badge: "Popular 🔥",
+            inStock: true
+        }, {
+            id: 12,
+            name: "فروٹ چاٹ (اسپیشل) / Special Fruit",
+            price: 350,
+            description: "اسپیشل فروٹ چاٹ / Special Fruit Chat",
+            image: "https://images.unsplash.com/photo-1589301760014-d929f3979c05?auto=format&fit=crop&w=500&q=80",
+            category: "fruit",
+            rating: 4.8,
+            deliveryTime: "5-10 min",
+            badge: "Offer 🎊",
+            inStock: true
+        }];
+
+        // ===================== SYSTEM CODE =====================
+        let cart = [];
+        const CART_KEY = 'jalandhar_cart';
+        let currentFilter = 'all';
+        let currentSearch = '';
+
+        function loadCart() {
+            try {
+                const s = localStorage.getItem(CART_KEY);
+                if (s) cart = JSON.parse(s);
+            } catch (_) { cart = []; }
+        }
+
+        function saveCart() {
+            localStorage.setItem(CART_KEY, JSON.stringify(cart));
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('translate-x-full');
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        function filterCategory(cat) {
+            currentFilter = cat;
+            // Update category cards
+            document.querySelectorAll('.category-card').forEach(c => {
+                c.classList.toggle('active', c.dataset.cat === cat);
+            });
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.filter === cat);
+            });
+            renderFoodItems();
+        }
+
+        function renderFoodItems() {
+            const container = document.getElementById('food-container');
+            const noResult = document.getElementById('no-results');
+            let filtered = foodItems;
+
+            if (currentFilter !== 'all') {
+                filtered = filtered.filter(f => f.category === currentFilter);
+            }
+            if (currentSearch.trim() !== '') {
+                const s = currentSearch.toLowerCase().trim();
+                filtered = filtered.filter(f =>
+                    f.name.toLowerCase().includes(s) ||
+                    f.description.toLowerCase().includes(s) ||
+                    f.category.toLowerCase().includes(s)
+                );
+            }
+
+            if (filtered.length === 0) {
+                container.innerHTML = '';
+                noResult.classList.remove('hidden');
+                return;
+            }
+            noResult.classList.add('hidden');
+
+            container.innerHTML = filtered.map(f => {
+                const stars = '★'.repeat(Math.floor(f.rating)) + (f.rating % 1 >= 0.5 ? '★' : '');
+                const emptyStars = '☆'.repeat(5 - Math.ceil(f.rating));
+                const badgeClass = f.badge.includes('Popular') ? 'badge-popular' :
+                    f.badge.includes('New') ? 'badge-new' :
+                    f.badge.includes('Offer') ? 'badge-offer' : 'badge-special';
+                return `
+                            <div class="food-card rounded-2xl overflow-hidden shadow-sm relative">
+                                ${f.badge ? `<span class="absolute top-3 left-3 z-10 text-xs font-bold px-3 py-1.5 rounded-full ${badgeClass} shadow-lg">${f.badge}</span>` : ''}
+                                <img src="${f.image}" alt="${f.name}" class="w-full h-52 object-cover" loading="lazy" />
+                                <div class="p-4">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <h3 class="font-bold text-md">${f.name}</h3>
+                                        <span class="delivery-time"><i class="far fa-clock mr-1"></i>${f.deliveryTime}</span>
+                                    </div>
+                                    <p class="text-gray-500 text-xs mb-2">${f.description}</p>
+                                    <div class="flex items-center gap-1 mb-2">
+                                        <span class="stars">${stars}${emptyStars}</span>
+                                        <span class="text-xs text-gray-500">(${f.rating})</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="price-tag">Rs. ${f.price.toLocaleString()}</span>
+                                        ${f.inStock ? 
+                                            `<button onclick="addToCart(${f.id})" class="bg-black text-white px-5 py-2 rounded-full text-sm hover:bg-yellow-400 hover:text-black transition font-semibold">
+                                                <i class="fas fa-plus mr-1"></i> Add
+                                            </button>` :
+                                            `<span class="text-red-500 text-xs font-bold bg-red-50 px-3 py-1 rounded-full">Out of Stock</span>`
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+            }).join('');
+        }
+
+        function addToCart(foodId) {
+            const food = foodItems.find(f => f.id === foodId);
+            if (!food || !food.inStock) return;
+            cart.push({ id: food.id, name: food.name, price: food.price });
+            saveCart();
+            updateCartUI();
+            // feedback
+            const btns = document.querySelectorAll('button');
+            btns.forEach(b => {
+                if (b.textContent.includes('Add')) {
+                    const orig = b.innerHTML;
+                    b.innerHTML = '<i class="fas fa-check mr-1"></i> Added!';
+                    b.style.background = '#22c55e';
+                    b.style.color = '#fff';
+                    setTimeout(() => {
+                        b.innerHTML = orig;
+                        b.style.background = '';
+                        b.style.color = '';
+                    }, 700);
+                }
+            });
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            saveCart();
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-count').textContent = cart.length;
+            const itemsEl = document.getElementById('cart-items');
+            const totalEl = document.getElementById('cart-total');
+            const emptyMsg = document.getElementById('empty-cart-msg');
+            if (cart.length === 0) {
+                itemsEl.innerHTML = '';
+                emptyMsg.style.display = 'block';
+                totalEl.textContent = 'Rs. 0';
+                return;
+            }
+            emptyMsg.style.display = 'none';
+            let total = 0;
+            itemsEl.innerHTML = cart.map((item, idx) => {
+                total += item.price;
+                return `
+                            <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-200">
+                                <div>
+                                    <p class="font-semibold text-sm">${item.name}</p>
+                                    <p class="text-xs text-gray-500">Rs. ${item.price.toLocaleString()}</p>
+                                </div>
+                                <button onclick="removeItem(${idx})" class="text-red-400 hover:text-red-600 text-xl font-light w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-50 transition">&times;</button>
+                            </div>
+                        `;
+            }).join('');
+            totalEl.textContent = `Rs. ${total.toLocaleString()}`;
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('🛒 کارٹ خالی ہے / Cart is empty!');
+                return;
+            }
+            let msg = 'السلام علیکم Jalandhar Chaska & FOOD POINT! میرا آرڈر:\n\n';
+            cart.forEach(i => msg += `• ${i.name} — Rs. ${i.price.toLocaleString()}\n`);
+            const total = cart.reduce((s, i) => s + i.price, 0);
+            msg += `\n*کل / Total:* Rs. ${total.toLocaleString()}`;
+            msg += `\n\n📞 03221158760`;
+            window.open(`https://wa.me/923221158760?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // ===================== EVENT LISTENERS =====================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+            renderFoodItems();
+            updateCartUI();
+
+            // Filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    // Update category cards
+                    document.querySelectorAll('.category-card').forEach(c => {
+                        c.classList.toggle('active', c.dataset.cat === currentFilter);
+                    });
+                    renderFoodItems();
+                });
+            });
+
+            // Search
+            document.getElementById('search-input').addEventListener('input', function() {
+                currentSearch = this.value;
+                renderFoodItems();
+            });
+
+            // Close cart on outside click
+            document.addEventListener('click', function(e) {
+                const sidebar = document.getElementById('cart-sidebar');
+                if (!sidebar.classList.contains('translate-x-full')) {
+                    if (!sidebar.contains(e.target) && !e.target.closest('.fa-shopping-cart') && !e.target
+                        .closest('[onclick="toggleCart()"]')) {
+                        toggleCart();
+                    }
+                }
+            });
+
+            // Keyboard shortcut: ESC to close cart
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    const sidebar = document.getElementById('cart-sidebar');
+                    if (!sidebar.classList.contains('translate-x-full')) {
+                        toggleCart();
+                    }
+                }
+            });
+        });
+
+        console.log('🍕 Jalandhar Chaska & FOOD POINT — Live & Ready!');
+        console.log(`🍽️  ${foodItems.length} dishes loaded.`);
+        console.log('📞 WhatsApp: 03221158760');
+        console.log('🚚 FREE HOME DELIVERY');
+    </script>
+</body>
+</html>
